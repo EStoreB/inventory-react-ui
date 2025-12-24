@@ -1,26 +1,31 @@
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Inventory Management UI</h1>
-      <nav style={{ marginBottom: 20 }}>
-        <Link to="/">Dashboard</Link>
-      </nav>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      {/* Sidebar */}
+      <aside
+        style={{
+          width: "220px",
+          background: "#1e293b",
+          color: "#fff",
+          padding: "20px",
+        }}
+      >
+        <h2 style={{ marginBottom: "20px" }}>Inventory</h2>
+        <nav>
+          <p>📊 Dashboard</p>
+          <p>📦 Items</p>
+          <p>🏷 Categories</p>
+          <p>🤝 Suppliers</p>
+          <p>📈 Reports</p>
+        </nav>
+      </aside>
 
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-      </Routes>
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-      <p>Inventory system is running successfully 🎉</p>
+      {/* Main content */}
+      <main style={{ flex: 1, padding: "20px", background: "#f1f5f9" }}>
+        <Dashboard />
+      </main>
     </div>
   );
 }
