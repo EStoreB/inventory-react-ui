@@ -1,92 +1,61 @@
 import { useEffect, useState } from "react";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbz68kPXoaT9HyMVigkhjbQH0OfpKkbrXExJ_iI025VIGXki-DC2K42ZACzzedkpnGHY/exec";
+const API = "https://script.google.com/macros/s/AKfycbz68kPXoaT9HyMVigkhjbQH0OfpKkbrXExJ_iI025VIGXki-DC2K42ZACzzedkpnGHY/exec";
 
-function Inventory() {
-  const [items, setItems] = useState([]);
-  const [name, setName] = useState("");
-  const [qty, setQty] = useState("");
-  const [status, setStatus] = useState("Available");
-
-  // Load from Google Sheet
-  const loadItems = async () => {
-    const res = await fetch(API_URL);
-    const data = await res.json();
-    setItems(data);
-  };
+export default function Inventory() {
+  const [categories, setCategories] = useState([]);
+  const [form, setForm] = useState({
+    item_name: "",
+    category_id: "",
+    quantity: "",
+    status: "Available"
+  });
 
   useEffect(() => {
-    loadItems();
+    fetch(`${API}?action=categories`)
+      .then(res => res.json())
+      .then(setCategories);
   }, []);
 
-  // Save to Google Sheet
-  const addItem = async () => {
-    if (!name || !qty) return;
-
-    await fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify({
-        item_name: name,
-        quantity: qty,
-        status: status
-      })
+  const submit = async () => {
+    const params = new URLSearchParams({
+      action: "addInventory",
+      ...form
     });
 
-    setName("");
-    setQty("");
-    setStatus("Available");
-    loadItems();
+    await fetch(`${API}?${params}`);
+    alert("Inventory Added");
   };
 
   return (
     <>
-      <h1>Inventory</h1>
+      <h2>Add Inventory</h2>
 
-      <div className="card">
-        <input
-          placeholder="Item Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      <input placeholder="Item Name"
+        onChange={e => setForm({ ...form, item_name: e.target.value })}
+      />
 
-        <input
-          type="number"
-          placeholder="Quantity"
-          value={qty}
-          onChange={(e) => setQty(e.target.value)}
-        />
+      <select
+        onChange={e => setForm({ ...form, category_id: e.target.value })}
+      >
+        <option value="">Select Category</option>
+        {categories.map(c => (
+          <option key={c.id} value={c.id}>{c.name}</option>
+        ))}
+      </select>
 
-        <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option>Available</option>
-          <option>In Use</option>
-        </select>
+      <input type="number" placeholder="Quantity"
+        onChange={e => setForm({ ...form, quantity: e.target.value })}
+      />
 
-        <button onClick={addItem}>Add Item</button>
-      </div>
+      <select
+        onChange={e => setForm({ ...form, status: e.target.value })}
+      >
+        <option>Available</option>
+        <option>In Use</option>
+      </select>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Qty</th>
-            <th>Status</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {items.map((item, i) => (
-            <tr key={i}>
-              <td>{item.item_name}</td>
-              <td>{item.quantity}</td>
-              <td>{item.status}</td>
-              <td>{item.created_at}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <button onClick={submit}>Add Inventory</button>
     </>
   );
 }
-
-export default Inventory;
