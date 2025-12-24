@@ -59,3 +59,26 @@ body {
   margin-top: 10px;
   font-size: 32px;
 }
+input {
+  padding: 8px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
