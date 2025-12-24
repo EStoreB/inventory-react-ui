@@ -35,12 +35,15 @@ function Categories() {
     <>
       <h1>Categories</h1>
 
-      <div className="card">
-        <input
-          placeholder="Category name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+     <select value={category} onChange={(e) => setCategory(e.target.value)}>
+  <option value="">Select Category</option>
+  {categories.map((c, i) => (
+    <option key={i} value={c.category_name}>
+      {c.category_name}
+    </option>
+  ))}
+</select>
+
         <button onClick={addCategory}>Add Category</button>
       </div>
 
