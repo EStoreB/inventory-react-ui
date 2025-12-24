@@ -1,30 +1,30 @@
 function Dashboard() {
   return (
-    <>
+    <div>
       <h2>Dashboard</h2>
 
       <div className="cards">
         <div className="card">
-          <h3>Total Items</h3>
-          <p>120</p>
+          <span>Total Items</span>
+          <h1>120</h1>
         </div>
 
         <div className="card">
-          <h3>In Use</h3>
-          <p>85</p>
+          <span>In Use</span>
+          <h1>85</h1>
         </div>
 
         <div className="card">
-          <h3>Available</h3>
-          <p>35</p>
+          <span>Available</span>
+          <h1>35</h1>
         </div>
 
         <div className="card">
-          <h3>Vendors</h3>
-          <p>12</p>
+          <span>Vendors</span>
+          <h1>12</h1>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
