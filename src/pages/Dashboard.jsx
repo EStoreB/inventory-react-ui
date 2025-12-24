@@ -1,32 +1,31 @@
-export default function Dashboard() {
+function Dashboard() {
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Inventory system is running successfully 🎉</p>
+    <>
+      <h2>Dashboard</h2>
 
-      <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-        <Card title="Total Items" value="120" />
-        <Card title="Low Stock" value="8" />
-        <Card title="Categories" value="12" />
-        <Card title="Suppliers" value="6" />
+      <div className="cards">
+        <div className="card">
+          <h3>Total Items</h3>
+          <p>120</p>
+        </div>
+
+        <div className="card">
+          <h3>In Use</h3>
+          <p>85</p>
+        </div>
+
+        <div className="card">
+          <h3>Available</h3>
+          <p>35</p>
+        </div>
+
+        <div className="card">
+          <h3>Vendors</h3>
+          <p>12</p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
-function Card({ title, value }) {
-  return (
-    <div
-      style={{
-        background: "#fff",
-        padding: "20px",
-        borderRadius: "10px",
-        minWidth: "150px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-      }}
-    >
-      <h3>{title}</h3>
-      <h2>{value}</h2>
-    </div>
-  );
-}
+export default Dashboard;
