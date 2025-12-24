@@ -22,5 +22,14 @@ function App() {
     </div>
   );
 }
+<div className="app">
+  <div className="sidebar">
+    {/* links */}
+  </div>
+
+  <div className="content">
+    <Routes>...</Routes>
+  </div>
+</div>
 
 export default App;
