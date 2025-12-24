@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
-const API_URL = "PASTE_YOUR_SCRIPT_URL";
+const API_URL = "https://script.google.com/macros/s/AKfycbz68kPXoaT9HyMVigkhjbQH0OfpKkbrXExJ_iI025VIGXki-DC2K42ZACzzedkpnGHY/exec";
 
-function Categories() {
+export default function Categories() {
   const [categories, setCategories] = useState([]);
-  const [name, setName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
 
   const loadCategories = async () => {
     const res = await fetch(`${API_URL}?type=categories`);
     const data = await res.json();
-    setCategories(data);
+    setCategories(Array.isArray(data) ? data : []);
   };
 
   useEffect(() => {
@@ -17,54 +17,55 @@ function Categories() {
   }, []);
 
   const addCategory = async () => {
-    if (!name) return;
+    if (!categoryName.trim()) {
+      alert("Enter category name");
+      return;
+    }
 
     await fetch(API_URL, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        type: "category",
-        category_name: name
+        type: "categories",
+        category_name: categoryName
       })
     });
 
-    setName("");
+    setCategoryName("");
     loadCategories();
   };
 
   return (
-    <>
+    <div>
       <h1>Categories</h1>
 
-     <select value={category} onChange={(e) => setCategory(e.target.value)}>
-  <option value="">Select Category</option>
-  {categories.map((c, i) => (
-    <option key={i} value={c.category_name}>
-      {c.category_name}
-    </option>
-  ))}
-</select>
-
-        <button onClick={addCategory}>Add Category</button>
+      <div className="card" style={{ maxWidth: 400 }}>
+        <input
+          placeholder="Category name"
+          value={categoryName}
+          onChange={(e) => setCategoryName(e.target.value)}
+        />
+        <button onClick={addCategory} style={{ marginTop: 10 }}>
+          Add Category
+        </button>
       </div>
 
-      <table className="table">
+      <table className="table" style={{ marginTop: 16 }}>
         <thead>
           <tr>
+            <th>#</th>
             <th>Category Name</th>
-            <th>Created</th>
           </tr>
         </thead>
         <tbody>
           {categories.map((c, i) => (
             <tr key={i}>
+              <td>{i + 1}</td>
               <td>{c.category_name}</td>
-              <td>{c.created_at}</td>
             </tr>
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
-
-export default Categories;
