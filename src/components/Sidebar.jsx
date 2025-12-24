@@ -1,14 +1,14 @@
+import { Link } from "react-router-dom";
+
 function Sidebar() {
   return (
-    <aside className="sidebar">
+    <div className="sidebar">
       <h3>Menu</h3>
-      <ul>
-        <li>Dashboard</li>
-        <li>Inventory</li>
-        <li>Categories</li>
-        <li>Suppliers</li>
-      </ul>
-    </aside>
+      <Link to="/">Dashboard</Link>
+      <Link to="/inventory">Inventory</Link>
+      <Link to="/categories">Categories</Link>
+      <Link to="/suppliers">Suppliers</Link>
+    </div>
   );
 }
 
